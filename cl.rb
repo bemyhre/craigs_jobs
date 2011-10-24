@@ -1,14 +1,24 @@
 #!/usr/bin/env ruby
 require 'mechanize'
 
-jobs = []
 agent = Mechanize.new
+header = "<html><body><table class='sortable' id='jobs'><thead>
+                  <tr><th scope=col>Date</th>
+                  <th scope=col>Title</th>
+                  <th scope=col>Category</th>
+                  <th scope=col>Location</th>
+                  <th scope=col>Area</th>
+                  </tr></thead><tbody>"
+
+newFile = File.open('craigs_jobs.html', 'w')
+newFile.syswrite header
 
 #change this to the cities you want
 locations = ['milwaukee', 'madison']
 #change this to the categories you want
 categories = ['sof', 'sad', 'tch', 'web']
 
+jobs = []
 locations.each do |location|
   categories.each do |category|
     page = agent.get("http://#{location}.craigslist.org/#{category}/")
@@ -27,15 +37,6 @@ locations.each do |location|
   end
 end
 
-newFile = File.open('craigs_jobs.html', 'w')
-newFile.syswrite "<html><body>
-                  <table class='sortable' id='jobs'><thead>
-                  <tr><th scope=col>Date</th>
-                  <th scope=col>Title</th>
-                  <th scope=col>Category</th>
-                  <th scope=col>Location</th>
-                  <th scope=col>Area</th>
-                  </tr></thead><tbody>"
 
 jobs.each do |job|
   newFile.syswrite "<tr><td>#{job[:date].strftime("%Y/%m/%d")}</td>
