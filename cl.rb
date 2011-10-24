@@ -15,7 +15,7 @@ class Job
   end
 end
 
-@Jobs = Array.new
+@Jobs = []
 
 agent = Mechanize.new
 @date
@@ -39,10 +39,10 @@ locs.each do |loc|
           end
         end
       else
-        @Jobs << Job.new(loc, 
+        @Jobs << Job.new(loc,
                          (found.next.next==nil ? "" : found.next.next.text),
                          cat,
-                         @date, 
+                         @date,
                          found.text,
                          "<a  href='" + found.attributes["href"].value + "'>" + found.text[0,40] + "</a>"
                         )
@@ -53,22 +53,20 @@ locs.each do |loc|
 end
 
 
-newFile = File.open("cl.html", 'w')
-newFile.syswrite(<<-eos
-<html>
-<body>
-<table class='sortable' id='jobs'>
-<thead><tr>
-<th scope=col>Date</th>
-<th scope=col>Title</th>
-<th scope=col>Cat</th>
-<th scope=col>Loc</th>
-<th scope=col>Area</th>
-</thead>
-<tbody>
-                 eos
-                )
+newFile = File.open("craigs_jobs.html", 'w')
+newFile.syswrite("<html><body>
+                  <table class='sortable' id='jobs'><thead>
+                  <tr><th scope=col>Date</th>
+                  <th scope=col>Title</th>
+                  <th scope=col>Cat</th>
+                  <th scope=col>Loc</th>
+                  <th scope=col>Area</th>
+                  </tr></thead><tbody>")
 
 @Jobs.each do |job|
-  newFile.syswrite("<tr><td>" + job.date.strftime("%Y/%m/%d") + "</td><td>#{job.link}</td><td>#{job.cat}</td><td>#{job.loc}</td><td>#{job.area}&nbsp;</td></tr>")
+  newFile.syswrite("<tr><td>#{job.date.strftime("%Y/%m/%d")}</td>
+                   <td>#{job.link}</td>
+                   <td>#{job.cat}</td>
+                   <td>#{job.loc}</td>
+                   <td>#{job.area}&nbsp;</td></tr>")
 end
