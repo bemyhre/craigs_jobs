@@ -15,7 +15,7 @@ newFile = File.open('craigs_jobs.html', 'w')
 newFile.syswrite header
 
 #change this to the cities you want
-locations = ['milwaukee', 'madison']
+locations = ARGV.empty? ? ['milwaukee', 'madison'] : ARGV
 #change this to the categories you want
 categories = ['sof', 'sad', 'tch', 'web']
 
