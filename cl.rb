@@ -1,21 +1,7 @@
 #!/usr/bin/env ruby
 require 'mechanize'
 
-class Job
-  attr_accessor :loc, :area, :cat, :date, :text, :link
-  def initialize(loc, area, cat, date, text, link)
-    @loc = loc
-    @area = area
-    @cat = cat
-    @date = date
-    @text = text
-    @link = link
-  end
-end
-
-@jobs = []
-@date
-
+jobs = []
 agent = Mechanize.new
 
 #change this to the cities you want
@@ -31,19 +17,15 @@ locations.each do |location|
         @date = Time.parse(found.text)
         @date = Time.parse("#{found.text} #{Time.now.year-1}") if @date > Time.now
       else
-        @jobs << Job.new(location,
-                         (found.next.next.nil? ? "" : found.next.next.text),
-                         category,
-                         @date,
-                         found.text,
-                         "<a  href='" + found.attributes["href"].value + "'>" + found.text[0,40] + "</a>"
-                        )
-
+        jobs << {location: location,
+                  area: (found.next.next.nil? ? "" : found.next.next.text),
+                  category: category,
+                  date: @date,
+                  link: "<a  href='" + found.attributes["href"].value + "'>" + found.text[0,40] + "</a>" }
       end
     end
   end
 end
-
 
 newFile = File.open("craigs_jobs.html", 'w')
 newFile.syswrite "<html><body>
@@ -55,10 +37,10 @@ newFile.syswrite "<html><body>
                   <th scope=col>Area</th>
                   </tr></thead><tbody>"
 
-@jobs.each do |job|
-  newFile.syswrite "<tr><td>#{job.date.strftime("%Y/%m/%d")}</td>
-                   <td>#{job.link}</td>
-                   <td>#{job.cat}</td>
-                   <td>#{job.loc}</td>
-                   <td>#{job.area}&nbsp;</td></tr>"
+jobs.each do |job|
+  newFile.syswrite "<tr><td>#{job[:date].strftime("%Y/%m/%d")}</td>
+                   <td>#{job[:link]}</td>
+                   <td>#{job[:category]}</td>
+                   <td>#{job[:location]}</td>
+                   <td>#{job[:area]}&nbsp;</td></tr>"
 end
