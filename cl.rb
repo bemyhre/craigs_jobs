@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-require 'rubygems'
 require 'mechanize'
-require 'time'
 
 class Job
   attr_accessor :loc, :area, :cat, :date, :text, :link

@@ -9,4 +9,4 @@ simply run the script with `ruby cl.rb` and it'll generate an html file in the s
 
 
 ##Dependencies
-rubygems, mechanize, and time
+mechanize
