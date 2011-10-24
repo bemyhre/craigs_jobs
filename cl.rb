@@ -28,20 +28,21 @@ locations.each do |location|
         @date = Time.parse("#{found.text} #{Time.now.year-1}") if @date > Time.now
       else
         jobs << {location: location,
-                  area: (found.next.next.nil? ? "" : found.next.next.text),
-                  category: category,
-                  date: @date,
-                  link: "<a href='#{found.attributes['href'].value}'>#{found.text[0,40]}</a>" }
+                 area: (found.next.next.nil? ? "" : found.next.next.text),
+                 category: category,
+                 date: @date.strftime("%Y/%m/%d"),
+                 link: "<a href='#{found.attributes['href'].value}'>#{found.text[0,40]}</a>"}
       end
     end
   end
 end
 
-
-jobs.each do |job|
-  newFile.syswrite "<tr><td>#{job[:date].strftime("%Y/%m/%d")}</td>
-                   <td>#{job[:link]}</td>
-                   <td>#{job[:category]}</td>
-                   <td>#{job[:location]}</td>
-                   <td>#{job[:area]}&nbsp;</td></tr>"
+def tabularize job
+  "<tr><td>#{job[:date]}</td>
+  <td>#{job[:link]}</td>
+  <td>#{job[:category]}</td>
+  <td>#{job[:location]}</td>
+  <td>#{job[:area]}&nbsp;</td></tr>"
 end
+
+jobs.each{ |job| newFile.syswrite tabularize(job) }
