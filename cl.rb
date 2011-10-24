@@ -9,6 +9,7 @@ header = "<html><body><table class='sortable' id='jobs'><thead>
                   <th scope=col>Location</th>
                   <th scope=col>Area</th>
                   </tr></thead><tbody>"
+footer = "</tbody></table></body></html>"
 
 newFile = File.open('craigs_jobs.html', 'w')
 newFile.syswrite header
@@ -46,3 +47,4 @@ def tabularize job
 end
 
 jobs.each{ |job| newFile.syswrite tabularize(job) }
+newFile.syswrite footer
