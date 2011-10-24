@@ -36,7 +36,7 @@ locs.each do |loc|
           @date = Time.parse(found.text)
           if(@date > Time.now)
             @date = Time.parse(found.text + " 2010")
-            end
+          end
         end
       else
         @Jobs << Job.new(loc, 
@@ -45,7 +45,7 @@ locs.each do |loc|
                          @date, 
                          found.text,
                          "<a  href='" + found.attributes["href"].value + "'>" + found.text[0,40] + "</a>"
-                         )
+                        )
 
       end
     end
@@ -66,8 +66,9 @@ newFile.syswrite(<<-eos
 <th scope=col>Area</th>
 </thead>
 <tbody>
-eos
-)
+                 eos
+                )
+
 @Jobs.each do |job|
   newFile.syswrite("<tr><td>" + job.date.strftime("%Y/%m/%d") + "</td><td>#{job.link}</td><td>#{job.cat}</td><td>#{job.loc}</td><td>#{job.area}&nbsp;</td></tr>")
 end
