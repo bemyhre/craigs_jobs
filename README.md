@@ -7,13 +7,13 @@ Currently, it takes posts from the categories of software, systems, tech support
 ##Usage
 Run the script with:
 
-  ruby cl.rb
+    ruby cl.rb
 
 and it'll generate an html file in the same directory called **craigs_jobs.html**.
 
 Default locations are Madison and Milwaukee, WI, but you can pass locations as additional arguments, e.g.
 
-  ruby cl.rb madison sfbay
+    ruby cl.rb madison sfbay
 
 will give you job listings from Madison and San Francisco.
 
