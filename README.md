@@ -18,5 +18,4 @@ Default locations are Madison and Milwaukee, WI, but you can pass locations as a
 will give you job listings from Madison and San Francisco.
 
 ##Dependencies
-
 mechanize
