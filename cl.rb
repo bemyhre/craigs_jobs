@@ -15,7 +15,7 @@ newFile = File.open('craigs_jobs.html', 'w')
 newFile.syswrite header
 
 #change this to the cities you want
-locations = ARGV.empty? ? ['milwaukee', 'madison'] : ARGV
+locations = ARGV.empty? ? ['sfbay'] : ARGV
 #change this to the categories you want
 categories = ['sof', 'sad', 'tch', 'web']
 
@@ -32,7 +32,7 @@ locations.each do |location|
                  area: (found.next.next.nil? ? "" : found.next.next.text),
                  category: category,
                  date: @date.strftime("%Y/%m/%d"),
-                 link: "<a href='#{found.attributes['href'].value}'>#{found.text[0,40]}</a>"}
+                 link: "<a href='http://#{location}.craigslist.org#{found.attributes['href'].value}'>#{found.text[0,40]}LINK</a>"}
       end
     end
   end
